@@ -1,0 +1,60 @@
+/* Dots container — sits below the day number */
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 7px;
+  flex-shrink: 0;
+}
+
+/* Base dot */
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* Smooth appearance when note is added */
+  animation: popIn 220ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.regular {
+  background: var(--accent);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.45);
+}
+
+.important {
+  background: #ef4444;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.45);
+}
+
+/* Overflow "+" indicator when >3 notes */
+.overflow {
+  font-size: 0.5rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  line-height: 1;
+  margin-left: 1px;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* On selected/inRange cells, keep dots visible against the colored bg */
+:global(.selected) .dot,
+:global(.inRange) .dot {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Slightly smaller on mobile */
+@media (max-width: 480px) {
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
+  .wrapper {
+    gap: 2px;
+  }
+}

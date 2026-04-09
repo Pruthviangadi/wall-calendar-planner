@@ -1,0 +1,361 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  transition: border-color var(--transition);
+}
+
+/* ── Tabs ───────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--gray-100);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  transition: background var(--transition);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /* 44px minimum touch target height */
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    background var(--transition),
+    color var(--transition),
+    box-shadow 180ms ease;
+  position: relative;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.tab:hover:not(:disabled) {
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.activeTab {
+  background: var(--surface-raised);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: .6rem;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lockIcon {
+  font-size: .65rem;
+  opacity: .6;
+}
+
+/* ── Context label ──────────────────────────── */
+.contextLabel {
+  font-size: .75rem;
+  color: var(--text-secondary);
+  padding: 0 2px;
+  animation: fadeIn 200ms ease both;
+}
+
+.contextLabel strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Note list ──────────────────────────────── */
+.noteList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+.noteList::-webkit-scrollbar { width: 4px; }
+.noteList::-webkit-scrollbar-track { background: transparent; }
+.noteList::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0;
+  color: var(--text-muted);
+  animation: fadeIn 200ms ease both;
+}
+
+.emptyIcon {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.emptyState p {
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.emptyHint {
+  font-size: .72rem !important;
+  font-weight: 400 !important;
+  opacity: .7;
+}
+
+/* Note items */
+.noteItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  animation: slideInNote 300ms cubic-bezier(.34,1.56,.64,1) both;
+  transition: transform 300ms cubic-bezier(.25, .8, .25, 1), box-shadow 300ms ease, background var(--transition), border-color var(--transition);
+}
+
+.noteItem:hover {
+  border-color: var(--accent-mid);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+}
+
+.noteText {
+  font-size: .8rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.noteMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.noteDate {
+  font-size: .68rem;
+  color: var(--text-muted);
+}
+
+.deleteBtn {
+  color: var(--text-muted);
+  /* Minimum touch target: 44×44 visual + padding */
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  opacity: 0;
+  transition: opacity 150ms, color 150ms, background 150ms;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.noteItem:hover .deleteBtn { opacity: 1; }
+.noteItem:focus-within .deleteBtn { opacity: 1; }
+.deleteBtn:hover { color: #ef4444; background: rgba(239,68,68,0.08); }
+
+/* ── Input form ─────────────────────────────── */
+.inputForm { margin-top: 2px; }
+
+.inputWrap {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  background: var(--gray-50);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 8px 8px 12px;
+  transition: border-color 200ms, background var(--transition);
+}
+
+.inputWrap:focus-within {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+}
+
+.textarea {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: .82rem;
+  line-height: 1.5;
+  min-height: 22px;
+  max-height: 100px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  transition: color var(--transition);
+}
+
+.textarea::placeholder { color: var(--text-muted); }
+.textarea:disabled { opacity: .4; cursor: not-allowed; }
+
+.submitBtn {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms, transform 200ms cubic-bezier(.25, .8, .25, 1), box-shadow 200ms, opacity 150ms;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--accent-dark);
+  transform: scale(1.1) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37,99,235,.35);
+}
+
+.submitBtn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+/* Recurrence UI */
+.recurrenceSelect {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 6px;
+  font-size: .75rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+.recurrenceSelect:focus { border-color: var(--accent); }
+
+.recurrTag {
+  display: inline-block;
+  font-size: .6rem;
+  text-transform: uppercase;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.skipBtn {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  background: transparent;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 150ms, color 150ms, background 150ms;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.noteItem:hover .skipBtn { opacity: 1; }
+.noteItem:focus-within .skipBtn { opacity: 1; }
+.skipBtn:hover { color: #f59e0b; background: rgba(245,158,11,0.08); }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInNote {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+/* ── Mobile ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .panel {
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  .tabs {
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .tab {
+    font-size: 0.7rem;
+    padding: 6px 6px;
+  }
+
+  /* On touch: always show action buttons (no hover state on mobile) */
+  .deleteBtn,
+  .skipBtn {
+    opacity: 1;
+  }
+
+  .noteList {
+    max-height: 200px;
+  }
+
+  .submitBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .inputWrap {
+    padding: 10px 10px 10px 14px;
+  }
+}

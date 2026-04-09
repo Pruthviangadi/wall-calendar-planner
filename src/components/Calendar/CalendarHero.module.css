@@ -1,0 +1,130 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 420px;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* Image */
+.imageWrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  perspective: 1500px;
+}
+
+.heroImage {
+  animation: moving3D 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+@keyframes moving3D {
+  0% {
+    transform: scale(1.25) rotateX(3deg) rotateY(-4deg) translateZ(30px);
+  }
+  50% {
+    transform: scale(1.15) rotateX(-2deg) rotateY(3deg) translateZ(0px);
+  }
+  100% {
+    transform: scale(1.25) rotateX(4deg) rotateY(2deg) translateZ(40px);
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.1) 0%,
+    rgba(0,0,0,.25) 40%,
+    rgba(0,0,0,.65) 100%
+  );
+}
+
+/* Dark mode toggle */
+.darkToggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.25);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms;
+  z-index: 5;
+}
+.darkToggle:hover {
+  background: rgba(255,255,255,.3);
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 3;
+  padding: 0 28px 48px;
+}
+
+.seasonBadge {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.2);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.monthName {
+  font-family: var(--font-playfair);
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+
+.year {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: .85;
+  letter-spacing: .2em;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: .88rem;
+  font-style: italic;
+  opacity: .8;
+  max-width: 220px;
+  line-height: 1.4;
+}
+
+/* Mobile: Adjust hero height and padding */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 260px;
+  }
+  .content {
+    padding: 0 20px 40px;
+  }
+  .monthName {
+    font-size: 2.4rem;
+  }
+}

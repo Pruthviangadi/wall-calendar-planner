@@ -1,0 +1,241 @@
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Use aspect-ratio + min-height to guarantee a 44px touch target */
+  aspect-ratio: 1;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: transparent;
+  cursor: pointer;
+  gap: 2px;
+  padding: 4px;
+  /* Prevent tap highlight flash on mobile */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* Smooth transitions — will-change keeps the GPU layer ready */
+  will-change: background, transform;
+  transition:
+    background 120ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 120ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 160ms ease;
+  /* Stagger fade-in on month change */
+  opacity: 0;
+  animation: staggerFadeUp 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(var(--animation-order) * 12ms);
+}
+
+@keyframes staggerFadeUp {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Hover ──────────────────────────────────── */
+.cell:not(:disabled):hover {
+  background: var(--gray-100);
+  transform: scale(1.12) translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+  z-index: 10;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+/* ── Indicators row ─────────────────────────── */
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Other month ────────────────────────────── */
+.otherMonth {
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+/* ── Today ──────────────────────────────────── */
+.today {
+  position: relative;
+}
+
+.today::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.18;
+  filter: blur(7px);
+  animation: pulseGlow 2.5s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes pulseGlow {
+  0%   { transform: translate(-50%, -50%) scale(0.8); opacity: 0.12; filter: blur(4px); }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.35; filter: blur(9px); }
+}
+
+.today .number {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── Weekend ────────────────────────────────── */
+.weekend {
+  color: var(--accent);
+}
+
+/* ── Range states ───────────────────────────── */
+
+/* In-range background — no transform interference */
+.inRange {
+  background: var(--range-bg);
+  border-radius: 0;
+  color: var(--accent-dark);
+  transform: none !important;
+  transition: background 80ms ease;
+}
+.inRange:hover { background: var(--accent-light); }
+
+/* Hover preview */
+.inHover {
+  background: var(--accent-light);
+  opacity: 0.7;
+  border-radius: 0;
+  transform: none !important;
+  transition: background 60ms ease, opacity 60ms ease;
+}
+
+/* Selected endpoints */
+.selected {
+  transform: none !important;
+}
+
+.selected .number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  position: relative;
+  z-index: 2;
+}
+
+/* Range start: right side flush */
+.rangeStart {
+  background: var(--range-bg);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+/* Range end: left side flush */
+.rangeEnd {
+  background: var(--range-bg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Single day — no pill extension */
+.rangeStart.rangeEnd {
+  border-radius: var(--radius-sm);
+  background: transparent;
+}
+
+/* Hover endpoint preview */
+.hoverEdge .number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-mid);
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+/* ── Day number base ─────────────────────────── */
+.number {
+  line-height: 1;
+  /* Inherit transition so selection circle animates smoothly */
+  transition: inherit;
+}
+
+/* ── Holiday emoji ──────────────────────────── */
+.holidayDot {
+  font-size: 0.55rem;
+  line-height: 1;
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+
+/* ── Mobile ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .cell {
+    font-size: 0.8rem;
+    /* Keep 44px minimum touch target per WCAG / Apple HIG */
+    min-height: 44px;
+    min-width: 44px;
+    padding: 3px 2px;
+    /* Reduce the hover scale so it doesn't clip grid on mobile */
+    gap: 1px;
+  }
+
+  .cell:not(:disabled):hover {
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  .selected .number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.35);
+  }
+
+  .today .number {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hoverEdge .number {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cell {
+    font-size: 0.72rem;
+  }
+}

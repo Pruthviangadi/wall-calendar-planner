@@ -1,0 +1,52 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 16px 64px;
+  gap: 32px;
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoIcon {
+  font-size: 1.8rem;
+}
+
+.logoText {
+  font-family: var(--font-playfair);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -.03em;
+}
+
+.logoText span {
+  color: var(--accent);
+}
+
+.tagline {
+  font-size: .85rem;
+  color: var(--text-muted);
+  letter-spacing: .04em;
+}
+
+.footer {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--text-muted);
+  padding: 16px;
+  opacity: .7;
+}

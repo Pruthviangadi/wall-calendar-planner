@@ -1,0 +1,185 @@
+/* =============================================
+   GLOBAL CSS — Interactive Wall Calendar
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+/* ── CSS Variables ─────────────────────────── */
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+
+  /* Neutral palette */
+  --white: #ffffff;
+  --off-white: #f8f7f5;
+  --paper: #fefcf8;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Theme — Default (spring blue) */
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --accent-mid: #93c5fd;
+  --accent-dark: #1d4ed8;
+  --range-bg: #eff6ff;
+
+  /* Semantic */
+  --surface: var(--paper);
+  --surface-raised: rgba(255, 255, 255, 0.85); /* Glassmorphism */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-500);
+  --text-muted: var(--gray-400);
+  --border: rgba(229, 231, 235, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,0.6);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Dark Mode ──────────────────────────────── */
+[data-theme="dark"] {
+  --surface: #0f172a;
+  --surface-raised: rgba(15, 23, 42, 0.7); /* Sleek dark glass */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: rgba(51, 65, 85, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.5);
+  --shadow-lg: 0 30px 70px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  --range-bg: rgba(37,99,235,.2);
+  --off-white: #1a1a2e;
+  --paper: #1e2340;
+  --white: #242850;
+  --gray-100: #2d3748;
+  --gray-200: #374151;
+}
+
+/* ── Seasonal Themes ────────────────────────── */
+[data-season="spring"] {
+  --accent: #16a34a;
+  --accent-light: #dcfce7;
+  --accent-mid: #86efac;
+  --accent-dark: #15803d;
+  --range-bg: #f0fdf4;
+}
+[data-season="summer"] {
+  --accent: #ea580c;
+  --accent-light: #ffedd5;
+  --accent-mid: #fdba74;
+  --accent-dark: #c2410c;
+  --range-bg: #fff7ed;
+}
+[data-season="autumn"] {
+  --accent: #b45309;
+  --accent-light: #fef3c7;
+  --accent-mid: #fcd34d;
+  --accent-dark: #92400e;
+  --range-bg: #fffbeb;
+}
+[data-season="winter"] {
+  --accent: #7c3aed;
+  --accent-light: #ede9fe;
+  --accent-mid: #c4b5fd;
+  --accent-dark: #6d28d9;
+  --range-bg: #f5f3ff;
+}
+
+/* ── Reset ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-inter);
+  background: var(--surface);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+/* ── App Shell ──────────────────────────────── */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 64px;
+  background: var(--surface);
+  /* Animated Aurora background */
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(37,99,235,.15), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(99,102,241,.15), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(236,72,153,.1), transparent 50%);
+  background-size: 150% 150%;
+  animation: auroraFlow 18s ease-in-out infinite alternate;
+  transition: background var(--transition);
+}
+
+@keyframes auroraFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.app-header {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding: 0 4px;
+}
+
+.app-logo {
+  font-family: var(--font-playfair);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.app-logo span {
+  color: var(--accent);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
